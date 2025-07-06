@@ -2,23 +2,24 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title New Note
+# @raycast.title Note
 # @raycast.mode silent
 
 # Optional parameters:
 # @raycast.icon 🗒️
 # @raycast.argument1 { "type": "text", "placeholder": "Title" }
 # @raycast.argument2 { "type": "text", "placeholder": "Content" }
-# @raycast.packageName Notes
+# @raycast.packageName Shortcuts
 
 # Documentation:
-# @raycast.description Creates a new note.
+# @raycast.description Create a new note with a command.
 # @raycast.author Justin
+# @raycast.authorURL https://github.com/jkimble
 
 on run argv
-	set content to "<body><h1 style=\"color:black;\"> " & (item 1 of argv) & "</h1>
-	<p style=\"color:black;\" >" & (item 2 of argv) & "</p>
-	</body>"
+    set title to item 1 of argv
+    set body to item 2 of argv
+	set content to "<body><h1> " & title & "</h1><p>" & body & "</p></body>"
 
 	tell application "Notes"
 		activate
@@ -26,4 +27,3 @@ on run argv
 		log "New note created!"
 	end tell
 end run
-

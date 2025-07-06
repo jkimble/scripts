@@ -2,7 +2,7 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title New Reminder
+# @raycast.title Reminder
 # @raycast.mode silent
 
 # Optional parameters:
@@ -10,11 +10,12 @@
 # @raycast.argument1 { "type": "text", "placeholder": "Reminder" }
 # @raycast.argument2 { "type": "text", "placeholder": "Hours from now", "optional": true }
 # @raycast.argument3 { "type": "text", "placeholder": "Days from now", "optional": true }
-# @raycast.packageName Productivity
+# @raycast.packageName Shortcuts
 
 # Documentation:
-# @raycast.description Create a new Reminder.
+# @raycast.description Quickly create a reminder with a command.
 # @raycast.author Justin
+# @raycast.authorURL https://github.com/jkimble
 
 on run argv
     set title to item 1 of argv
