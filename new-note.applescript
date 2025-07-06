@@ -23,6 +23,7 @@ on run argv
 	tell application "Notes"
 		activate
 		make new note at folder "Notes" with properties {name:"", body:content}
+		log "New note created!"
 	end tell
 end run
 
