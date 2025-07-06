@@ -18,8 +18,16 @@
 
 on run argv
     set title to item 1 of argv
-    set hours to item 2 of argv as integer
-    set days to item 3 of argv as integer
+    if (count of argv) ≥ 2 then
+        set hours to (item 2 of argv) as integer
+    else
+        set hours to 0
+    end if
+    if (count of argv) ≥ 3 then
+        set days to (item 3 of argv) as integer
+    else
+        set days to 0
+    end if
     set secondsPerDay to 24 * 60 * 60
     set secondsPerHour to 60 * 60
 
