@@ -18,6 +18,11 @@
 
 source "$(dirname "$0")/.env"
 
+if [ ! -f "$(dirname "$0")/.env" ]; then
+  echo "Missing required file: .env"
+  exit 1
+fi
+
 if [ -z "$1" ] || [ -z "$2" ]; then
   echo "Error: Server and Site parameters are required."
   exit 1
