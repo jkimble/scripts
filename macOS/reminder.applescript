@@ -38,7 +38,7 @@ on run argv
     tell application "Reminders"
         tell list "Reminders"
             make new reminder with properties {name:title, remind me date:remindDate}
-            log "New reminder created!"
+            return "New reminder created!"
         end tell
     end tell
 end run
