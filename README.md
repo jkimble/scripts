@@ -1,5 +1,4 @@
 # scripts
-___
 A collection of scripts that I use for productivity. These scripts will work best with
 [Raycast](https://www.raycast.com), but it's not required.
 
@@ -10,7 +9,7 @@ A collection of scripts that I use for productivity. These scripts will work bes
 
 ## Example Commands
 To run scripts manually:
-___
+
 ### Get IP Address
 ```
 ./get-ip-address.sh

@@ -1,5 +1,5 @@
 # macOS scripts
-___
+
 These scripts are made to interact with Mac/iOS apps/systems.
 
 **_Raycast is highly recommended to run these scripts._** 
@@ -12,7 +12,7 @@ osascript macOS/clear-downloads.applescript
 ```
 
 ## Documentation
-___
+
 ### Clear Downloads
 No parameters. Will prompt to make sure you want to clear downloads if
 there are 10 or more files.
