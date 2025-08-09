@@ -1,3 +1,6 @@
 .idea
 .DS_Store
 .env
+/deployment/*
+!/deployment/provision_laravel.sh
+!/deployment/github_deploy.yml
