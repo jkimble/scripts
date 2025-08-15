@@ -1,8 +1,8 @@
+#!/bin/bash
 # Run (as root) with:
 # chmod +x provision_laravel.sh
 # sudo ./provision_laravel.sh
 
-#!/bin/bash
 set -e
 
 #------ REQUIRED USER/PROJECT VARIABLES ------
@@ -47,9 +47,11 @@ if [ ! -f /home/deploy/.ssh/id_ed25519 ]; then
 fi
 
 # 3. Install core packages
+# optionally install: imagemagick
 apt install -y software-properties-common curl git ufw nginx mariadb-server redis-server supervisor unzip
 
 # 4. PHP $PHP_VERSION and extensions
+# optionally install: php$PHP_VERSION-imagick
 add-apt-repository ppa:ondrej/php -y
 apt update
 apt install -y php$PHP_VERSION php$PHP_VERSION-fpm php$PHP_VERSION-cli php$PHP_VERSION-mysql php$PHP_VERSION-redis php$PHP_VERSION-xml php$PHP_VERSION-mbstring php$PHP_VERSION-curl php$PHP_VERSION-zip php$PHP_VERSION-bcmath
@@ -146,21 +148,31 @@ cat > /etc/nginx/sites-available/$DOMAIN <<EOL
 server {
     listen 80;
     server_name $DOMAIN;
+    return 301 https://$DOMAIN\$request_uri;
+}
+server {
+    listen 443 ssl http2;
+    server_name $DOMAIN;
 
     root /var/www/$DOMAIN/public;
     index index.php index.html index.htm;
 
+    ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;
+
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers on;
+
     location / {
         try_files \$uri \$uri/ /index.php?\$query_string;
     }
-
     location ~ \.php$ {
         fastcgi_pass unix:/var/run/php/php$PHP_VERSION-fpm.sock;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME \$realpath_root\$fastcgi_script_name;
         include fastcgi_params;
     }
-
     location ~ /\.ht {
         deny all;
     }
@@ -172,7 +184,9 @@ nginx -t && systemctl reload nginx
 
 # 15. Install certbot and set up SSL
 apt install -y certbot python3-certbot-nginx
-certbot --nginx --non-interactive --agree-tos --register-unsafely-without-email -d $DOMAIN
+certbot certonly --nginx --non-interactive --agree-tos --register-unsafely-without-email -d $DOMAIN
+
+nginx -t && systemctl reload nginx
 
 
 echo "========================================"
